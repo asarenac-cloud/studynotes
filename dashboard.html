@@ -1,202 +1,37 @@
-<!DOCTYPE html>
-<html lang="sr">
-<head>
-  <meta charset="UTF-8">
-  <title>Dashboard – StudyNotes</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: #edf2f7;
-      color: #333;
-    }
-
-    h2 {
-      text-align: center;
-      font-weight: 600;
-      margin-top: 30px;
-    }
-
-    p.description {
-      max-width: 800px;
-      margin: 10px auto 30px auto;
-      text-align: center;
-      font-size: 1em;
-      line-height: 1.6;
-      color: #555;
-    }
-
-    /* ----- STATISTIKA ----- */
-    #stats {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin: 20px auto;
-      flex-wrap: wrap;
-    }
-
-    .stat-card {
-      background: #4aaaa4;
-      color: white;
-      padding: 25px 35px;
-      border-radius: 14px;
-      text-align: center;
-      width: 180px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .stat-card h3 {
-      margin: 10px 0 0 0;
-      font-weight: 600;
-      font-size: 1.5em;
-    }
-
-    .stat-card p {
-      margin: 0;
-      opacity: 0.9;
-    }
-
-    /* ----- KARTICE BELEŠAKA ----- */
-    #cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      max-width: 1000px;
-      margin: 20px auto 50px auto;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      width: 220px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .card h4 {
-      margin: 10px 0;
-      font-weight: 600;
-    }
-
-    .card p {
-      font-size: 0.95em;
-      color: #555;
-    }
-
-    button {
-      background: #4aaaa4;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-top: 10px;
-      transition: all 0.3s;
-    }
-
-    button:hover {
-      background: #3f9e9b;
-      transform: translateY(-2px);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-  </style>
-</head>
-<body>
-
 <h2>Početna strana</h2>
-
-<p class="description">
-StudyNotes je jednostavna web aplikacija namenjena studentima
-za organizaciju gradiva i vođenje beleški tokom učenja.
+<p class="description" style="text-align:center; max-width:800px;">
+StudyNotes je jednostavna web aplikacija namenjena studentima za organizaciju gradiva i vođenje beleški tokom učenja.
 </p>
-
-<p class="description">
-Aplikacija omogućava unos i pregled beleški, kao i osnovnu
-podelu gradiva po predmetima.
+<p class="description" style="text-align:center; max-width:800px;">
+Aplikacija omogućava unos i pregled beleški, kao i osnovnu podelu gradiva po predmetima.
 </p>
-
-<p class="description">
-Navigacija kroz aplikaciju vrši se putem padajućeg menija
-na vrhu stranice ili klikom na kartice ispod.
+<p class="description" style="text-align:center; max-width:800px;">
+Navigacija kroz aplikaciju vrši se putem padajućeg menija ili klikom na kartice.
 </p>
 
 <!-- STATISTIKA -->
-<div id="stats">
-  <div class="stat-card">
+<div id="stats" style="display:flex; justify-content:center; gap:30px; margin:20px auto; flex-wrap:wrap;">
+  <div class="stat-card" style="background:#4aaaa4; color:white; padding:25px 35px; border-radius:14px; text-align:center; width:180px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
     <p>Ukupno beleški</p>
     <h3 id="totalNotes">0</h3>
   </div>
-  <div class="stat-card">
+  <div class="stat-card" style="background:#4aaaa4; color:white; padding:25px 35px; border-radius:14px; text-align:center; width:180px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
     <p>Ukupno predmeta</p>
     <h3 id="totalSubjects">0</h3>
   </div>
 </div>
 
-<!-- KARTICE BELEŠAKA I PREDMETA -->
-<div id="cards">
-  <div class="card">
-    <h4>Beleška 1</h4>
-    <p>Primer beleške za učenje.</p>
-    <button>Otvorite</button>
-  </div>
-  <div class="card">
-    <h4>Beleška 2</h4>
-    <p>Još jedna beleška za organizaciju gradiva.</p>
-    <button>Otvorite</button>
-  </div>
-  <div class="card">
-    <h4>Predmet: Matematika</h4>
-    <p>Pregled gradiva i zadataka.</p>
-    <button>Otvorite</button>
-  </div>
-  <div class="card">
-    <h4>Predmet: Fizika</h4>
-    <p>Pregled gradiva i zadataka.</p>
-    <button>Otvorite</button>
-  </div>
-</div>
+<!-- KARTICE PREVIEW BELEŠAKA -->
+<div id="cards" style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; max-width:1000px; margin:20px auto 50px auto;"></div>
 
 <script>
   $(document).ready(function () {
-    // Automatska statistika
-    let notesCount = $("#cards .card:contains('Beleška')").length;
-    let subjectsCount = $("#cards .card:contains('Predmet')").length;
+    // generiši statistiku prema notes.html podatcima
+    let notesCount = localStorage.getItem('notesCount') || 0;
+    let subjectsCount = localStorage.getItem('subjectsCount') || 7;
     $("#totalNotes").text(notesCount);
     $("#totalSubjects").text(subjectsCount);
 
-    // Fade-in kartica
-    $("#cards .card").hide().each(function(index) {
-      $(this).delay(150*index).fadeIn(400);
-    });
-
-    // Dugmići za simulaciju otvaranja
-    $("#cards button").click(function() {
-      let title = $(this).siblings("h4").text();
-      alert("Otvaranje: " + title);
-    });
+    $("#cards").html("<p style='text-align:center; color:#555;'>Kliknite na 'Beleške' da dodate i pregledate beleške po predmetima.</p>");
   });
 </script>
-
-</body>
-</html>
