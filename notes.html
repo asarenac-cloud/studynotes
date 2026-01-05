@@ -1,140 +1,17 @@
-<!DOCTYPE html>
-<html lang="sr">
-<head>
-  <meta charset="UTF-8">
-  <title>Beleške – StudyNotes</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: #edf2f7;
-      color: #333;
-    }
-
-    h2 {
-      text-align: center;
-      font-weight: 600;
-      margin-top: 30px;
-    }
-
-    /* ----- INPUT FORM ----- */
-    .note-form {
-      max-width: 600px;
-      margin: 20px auto 40px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .note-form label {
-      display: block;
-      margin: 10px 0 5px 0;
-      font-weight: 600;
-    }
-
-    .note-form input, 
-    .note-form textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-      outline: none;
-      font-family: inherit;
-      transition: all 0.3s;
-    }
-
-    .note-form input:focus, 
-    .note-form textarea:focus {
-      border-color: #4aaaa4;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .note-form button {
-      background: #4aaaa4;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    .note-form button:hover {
-      background: #3f9e9b;
-      transform: translateY(-2px);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    /* ----- LISTA BELEŠAKA KAO KARTICE ----- */
-    #notesList {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      max-width: 1000px;
-      margin: 20px auto;
-    }
-
-    .note-card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      width: 220px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-    }
-
-    .note-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .note-card h4 {
-      margin: 0 0 10px 0;
-      font-weight: 600;
-    }
-
-    .note-card p {
-      margin: 0;
-      font-size: 0.95em;
-      color: #555;
-    }
-
-    /* dugme za brisanje */
-    .delete-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #ff5c5c;
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 0.8em;
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .delete-btn:hover {
-      background: #e04b4b;
-      transform: translateY(-2px);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-  </style>
-</head>
-<body>
-
 <h2>Beleške</h2>
 
-<div class="note-form">
+<div class="note-form" style="max-width:600px;margin:20px auto 40px auto;padding:20px;background:white;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+  <label>Predmet:</label>
+  <select id="noteSubject">
+    <option value="Istorija umetnosti 1">Istorija umetnosti 1</option>
+    <option value="Istorija umetnosti 2">Istorija umetnosti 2</option>
+    <option value="Osnovi poslovanja">Osnovi poslovanja</option>
+    <option value="CRM">CRM</option>
+    <option value="HMIP">HMIP</option>
+    <option value="Digitalni marketing">Digitalni marketing</option>
+    <option value="Menadžment">Menadžment</option>
+  </select>
+
   <label>Naziv beleške:</label>
   <input type="text" id="noteTitle">
 
@@ -144,46 +21,55 @@
   <button id="addNote">Dodaj belešku</button>
 </div>
 
-<h3 style="text-align:center;">Lista beleški</h3>
+<h3 style="text-align:center;">Lista beleški po predmetima</h3>
 <div id="notesList"></div>
 
 <script>
-  $(document).ready(function () {
-    // Dodavanje nove beleške
-    $("#addNote").on("click", function () {
-      let title = $("#noteTitle").val();
-      let text = $("#noteText").val();
-
-      if (title === "" || text === "") {
-        alert("Molimo vas da popunite sva polja.");
-        return;
-      }
-
-      // Kreiranje kartice
-      let card = $(`
-        <div class="note-card">
-          <h4>${title}</h4>
-          <p>${text}</p>
-          <button class="delete-btn">Obriši</button>
-        </div>
-      `);
-
-      // Dodavanje fade-in animacije
-      card.hide().appendTo("#notesList").fadeIn(400);
-
-      // Reset input polja
-      $("#noteTitle").val("");
-      $("#noteText").val("");
+$(document).ready(function () {
+  // load iz localStorage
+  let savedNotes = JSON.parse(localStorage.getItem('notes')) || {};
+  for(let subj in savedNotes){
+    let container = $(`<div class="subject-container" data-subject="${subj}"><h4 style="text-align:center;">${subj}</h4><div class="subject-notes"></div></div>`);
+    container.appendTo("#notesList");
+    savedNotes[subj].forEach(note=>{
+      let card = $(`<div class="note-card" style="background:white;border-radius:12px;padding:20px;width:220px;box-shadow:0 4px 12px rgba(0,0,0,0.05);margin:10px auto;"><h4>${note.title}</h4><p>${note.text}</p><button class="delete-btn">Obriši</button></div>`);
+      card.hide().appendTo(container.find(".subject-notes")).fadeIn(400);
     });
+  }
 
-    // Brisanje beleške (delegacija događaja)
-    $("#notesList").on("click", ".delete-btn", function () {
-      $(this).parent(".note-card").fadeOut(300, function () {
-        $(this).remove();
-      });
-    });
+  // dodavanje nove beleške
+  $("#addNote").on("click", function () {
+    let title = $("#noteTitle").val();
+    let text = $("#noteText").val();
+    let subject = $("#noteSubject").val();
+    if(title=="" || text==""){ alert("Popunite sva polja"); return; }
+
+    let container = $("#notesList").find(`.subject-container[data-subject='${subject}']`);
+    if(container.length===0){
+      container = $(`<div class="subject-container" data-subject="${subject}"><h4 style="text-align:center;">${subject}</h4><div class="subject-notes"></div></div>`);
+      $("#notesList").append(container);
+    }
+
+    let card = $(`<div class="note-card" style="background:white;border-radius:12px;padding:20px;width:220px;box-shadow:0 4px 12px rgba(0,0,0,0.05);margin:10px auto;"><h4>${title}</h4><p>${text}</p><button class="delete-btn">Obriši</button></div>`);
+    card.hide().appendTo(container.find(".subject-notes")).fadeIn(400);
+
+    // sacuvaj u localStorage
+    savedNotes[subject] = savedNotes[subject] || [];
+    savedNotes[subject].push({title,text});
+    localStorage.setItem('notes', JSON.stringify(savedNotes));
+    localStorage.setItem('notesCount', Object.values(savedNotes).reduce((a,b)=>a+b.length,0));
+
+    $("#noteTitle").val(""); $("#noteText").val("");
   });
-</script>
 
-</body>
-</html>
+  // brisanje beleške
+  $("#notesList").on("click",".delete-btn",function(){
+    let subj=$(this).closest(".subject-container").data("subject");
+    let title=$(this).siblings("h4").text();
+    savedNotes[subj] = savedNotes[subj].filter(n=>n.title!==title);
+    localStorage.setItem('notes',JSON.stringify(savedNotes));
+    localStorage.setItem('notesCount',Object.values(savedNotes).reduce((a,b)=>a+b.length,0));
+    $(this).parent(".note-card").fadeOut(300,function(){ $(this).remove(); });
+  });
+});
+</script>
