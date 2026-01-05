@@ -1,132 +1,28 @@
-<!DOCTYPE html>
-<html lang="sr">
-<head>
-  <meta charset="UTF-8">
-  <title>Predmeti – StudyNotes</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: #edf2f7;
-      color: #333;
-    }
-
-    h2 {
-      text-align: center;
-      font-weight: 600;
-      margin-top: 30px;
-    }
-
-    p.description {
-      max-width: 800px;
-      margin: 10px auto 20px auto;
-      text-align: center;
-      font-size: 1em;
-      line-height: 1.6;
-      color: #555;
-    }
-
-    /* ----- KARTICE PREDMETA ----- */
-    #subjectsList {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      max-width: 1000px;
-      margin: 20px auto 50px auto;
-    }
-
-    .subject-card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      width: 220px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .subject-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .subject-card h4 {
-      margin: 0 0 10px 0;
-      font-weight: 600;
-    }
-
-    .subject-card p {
-      font-size: 0.95em;
-      color: #555;
-      margin: 0 0 10px 0;
-    }
-
-    .subject-card button {
-      background: #4aaaa4;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    .subject-card button:hover {
-      background: #3f9e9b;
-      transform: translateY(-2px);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-  </style>
-</head>
-<body>
-
 <h2>Predmeti</h2>
-
-<p class="description">
-U nastavku je prikazan primer liste predmeta za koje se mogu voditi beleške
-u okviru aplikacije StudyNotes:
+<p class="description" style="text-align:center; max-width:800px;">
+U nastavku je prikazan primer liste predmeta za koje se mogu voditi beleške u okviru aplikacije StudyNotes:
 </p>
 
-<div id="subjectsList">
-  <div class="subject-card">
-    <h4>Istorija umetnosti 1</h4>
-    <p>Organizujte beleške po ovom predmetu.</p>
-    <button>Otvori</button>
-  </div>
-  <div class="subject-card">
-    <h4>Istorija umetnosti 2</h4>
-    <p>Organizujte beleške po ovom predmetu.</p>
-    <button>Otvori</button>
-  </div>
-  <div class="subject-card">
-    <h4>Osnovi poslovanja</h4>
-    <p>Organizujte beleške po ovom predmetu.</p>
-    <button>Otvori</button>
-  </div>
-  <div class="subject-card">
-    <h4>CRM (Customer Relationship Management)</h4>
-    <p>Organizujte beleške po ovom predmetu.</p>
-    <button>Otvori</button>
-  </div>
-  <div class="subject-card">
-    <h4>HMIP</h4>
-    <p>Organizujte beleške po ovom predmetu.</p>
-    <button>Otvori</button>
-  </div>
-  <div class="subject-card">
-    <h4>Digitalni marketing</h4>
-    <p>Organizujte beleške po ovom predmetu.</p>
-    <button>Otvori</button>
-  </div>
-  <div class="subject-card">
-    <h4>Menadžment</h4>
-    <p>Organizujte beleške po ovom predmetu.</p>
-    <button>Otvori</button>
+<div id="subjectsList" style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; max-width:1000px; margin:20px auto 50px auto;">
+  <div class="subject-card"><h4>Istorija umetnosti 1</h4><p>Organizujte beleške po ovom predmetu.</p><button>Otvori</button></div>
+  <div class="subject-card"><h4>Istorija umetnosti 2</h4><p>Organizujte beleške po ovom predmetu.</p><button>Otvori</button></div>
+  <div class="subject-card"><h4>Osnovi poslovanja</h4><p>Organizujte beleške po ovom predmetu.</p><button>Otvori</button></div>
+  <div class="subject-card"><h4>CRM</h4><p>Organizujte beleške po ovom predmetu.</p><button>Otvori</button></div>
+  <div class="subject-card"><h4>HMIP</h4><p>Organizujte beleške po ovom predmetu.</p><button>Otvori</button></div>
+  <div class="subject-card"><h4>Digitalni marketing</h4><p>Organizujte beleške po ovom predmetu.</p><button>Otvori</button></div>
+  <div class="subject-card"><h4>Menadžment</h4><p>Organizujte beleške po ovom predmetu.</p><button>Otvori</button></div>
+</div>
+
+<p class="description" style="text-align:center; max-width:800px;">
+Za svaki predmet moguće je voditi više beleški i organizovati gradivo.
+</p>
+
+<script>
+$(document).ready(function(){
+  $("#subjectsList .subject-card").hide().each(function(i){ $(this).delay(150*i).fadeIn(400); });
+  $("#subjectsList button").click(function(){
+    let subj=$(this).siblings("h4").text();
+    alert("Otvaranje predmeta: "+subj);
+  });
+});
+</script>
