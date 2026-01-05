@@ -1,31 +1,189 @@
-<h2>Beleške</h2>
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <title>Beleške – StudyNotes</title>
 
-<label>Naziv beleške:</label>
-<input type="text" id="noteTitle">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<label>Sadržaj beleške:</label>
-<textarea id="noteText" rows="4"></textarea>
-
-<button id="addNote">Dodaj belešku</button>
-
-<h3>Lista beleški</h3>
-<ul id="notesList"></ul>
-
-<script>
-  $("#addNote").on("click", function () {
-    let title = $("#noteTitle").val();
-    let text = $("#noteText").val();
-
-    if (title === "" || text === "") {
-      alert("Molimo vas da popunite sva polja.");
-      return;
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: #edf2f7;
+      color: #333;
     }
 
-    $("#notesList").append(
-      "<li><strong>" + title + ":</strong> " + text + "</li>"
-    );
+    h2 {
+      text-align: center;
+      font-weight: 600;
+      margin-top: 30px;
+    }
 
-    $("#noteTitle").val("");
-    $("#noteText").val("");
+    /* ----- INPUT FORM ----- */
+    .note-form {
+      max-width: 600px;
+      margin: 20px auto 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .note-form label {
+      display: block;
+      margin: 10px 0 5px 0;
+      font-weight: 600;
+    }
+
+    .note-form input, 
+    .note-form textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      outline: none;
+      font-family: inherit;
+      transition: all 0.3s;
+    }
+
+    .note-form input:focus, 
+    .note-form textarea:focus {
+      border-color: #4aaaa4;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .note-form button {
+      background: #4aaaa4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .note-form button:hover {
+      background: #3f9e9b;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* ----- LISTA BELEŠAKA KAO KARTICE ----- */
+    #notesList {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+
+    .note-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      width: 220px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .note-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .note-card h4 {
+      margin: 0 0 10px 0;
+      font-weight: 600;
+    }
+
+    .note-card p {
+      margin: 0;
+      font-size: 0.95em;
+      color: #555;
+    }
+
+    /* dugme za brisanje */
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff5c5c;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.8em;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #e04b4b;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<h2>Beleške</h2>
+
+<div class="note-form">
+  <label>Naziv beleške:</label>
+  <input type="text" id="noteTitle">
+
+  <label>Sadržaj beleške:</label>
+  <textarea id="noteText" rows="4"></textarea>
+
+  <button id="addNote">Dodaj belešku</button>
+</div>
+
+<h3 style="text-align:center;">Lista beleški</h3>
+<div id="notesList"></div>
+
+<script>
+  $(document).ready(function () {
+    // Dodavanje nove beleške
+    $("#addNote").on("click", function () {
+      let title = $("#noteTitle").val();
+      let text = $("#noteText").val();
+
+      if (title === "" || text === "") {
+        alert("Molimo vas da popunite sva polja.");
+        return;
+      }
+
+      // Kreiranje kartice
+      let card = $(`
+        <div class="note-card">
+          <h4>${title}</h4>
+          <p>${text}</p>
+          <button class="delete-btn">Obriši</button>
+        </div>
+      `);
+
+      // Dodavanje fade-in animacije
+      card.hide().appendTo("#notesList").fadeIn(400);
+
+      // Reset input polja
+      $("#noteTitle").val("");
+      $("#noteText").val("");
+    });
+
+    // Brisanje beleške (delegacija događaja)
+    $("#notesList").on("click", ".delete-btn", function () {
+      $(this).parent(".note-card").fadeOut(300, function () {
+        $(this).remove();
+      });
+    });
   });
 </script>
+
+</body>
+</html>
