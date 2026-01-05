@@ -1,0 +1,31 @@
+<h2>Beleške</h2>
+
+<label>Naziv beleške:</label>
+<input type="text" id="noteTitle">
+
+<label>Sadržaj beleške:</label>
+<textarea id="noteText" rows="4"></textarea>
+
+<button id="addNote">Dodaj belešku</button>
+
+<h3>Lista beleški</h3>
+<ul id="notesList"></ul>
+
+<script>
+  $("#addNote").on("click", function () {
+    let title = $("#noteTitle").val();
+    let text = $("#noteText").val();
+
+    if (title === "" || text === "") {
+      alert("Molimo vas da popunite sva polja.");
+      return;
+    }
+
+    $("#notesList").append(
+      "<li><strong>" + title + ":</strong> " + text + "</li>"
+    );
+
+    $("#noteTitle").val("");
+    $("#noteText").val("");
+  });
+</script>
