@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <title>StudyNotes</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: #f2f7fa;
+      color: #333;
+    }
+
+    header {
+      background: #4aaaa4;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    select {
+      padding: 8px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    #content {
+      background: white;
+      margin: 20px;
+      padding: 25px;
+      border-radius: 8px;
+      min-height: 250px;
+    }
+
+    footer {
+      background: #eee;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    button {
+      background: #4aaaa4;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    textarea, input {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>StudyNotes</h1>
+  <p>Web aplikacija za organizaciju beleški tokom učenja</p>
+
+  <select id="menu">
+    <option value="dashboard.html">Početna</option>
+    <option value="notes.html">Beleške</option>
+    <option value="subjects.html">Predmeti</option>
+    <option value="about.html">O aplikaciji</option>
+  </select>
+</header>
+
+<div id="content"></div>
+
+<footer>
+  &copy; 2025 StudyNotes – studentski projekat
+</footer>
+
+<script>
+  $(document).ready(function () {
+    $("#content").load("dashboard.html");
+  });
+
+  $("#menu").on("change", function () {
+    let page = $(this).val();
+    $("#content").fadeOut(200, function () {
+      $("#content").load(page, function () {
+        $("#content").fadeIn(200);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
