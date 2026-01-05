@@ -1,138 +1,18 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="sr">
 <head>
   <meta charset="UTF-8">
   <title>StudyNotes</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
   <style>
-    /* ----- BODY I GLOBAL ----- */
-    body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: #edf2f7;
-      color: #333;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ----- HEADER ----- */
-    header {
-      background: linear-gradient(90deg, #4aaaa4, #3f9e9b);
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    header h1 {
-      margin: 0;
-      font-weight: 600;
-      font-size: 2.2em;
-    }
-
-    header p {
-      margin: 5px 0 20px 0;
-      font-weight: 400;
-      opacity: 0.9;
-    }
-
-    /* ----- SELECT MENU ----- */
-    select#menu {
-      padding: 10px 12px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      outline: none;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    select#menu:hover {
-      border-color: #4aaaa4;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    /* ----- HERO KARTICE ----- */
-    #hero {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin: 30px auto;
-      max-width: 1000px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      width: 200px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .card h3 {
-      margin: 10px 0;
-      font-weight: 600;
-    }
-
-    .card p {
-      font-size: 0.95em;
-      color: #555;
-    }
-
-    /* ----- CONTENT AREA ----- */
-    #content {
-      background: white;
-      margin: 25px auto;
-      padding: 30px;
-      border-radius: 12px;
-      min-height: 300px;
-      max-width: 900px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: all 0.3s;
-    }
-
-    /* ----- FOOTER ----- */
-    footer {
-      background: #f5f5f5;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      border-top: 1px solid #ddd;
-      color: #555;
-    }
-
-    /* ----- DUGMICI ----- */
-    button {
-      background: #4aaaa4;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    button:hover {
-      background: #3f9e9b;
-      transform: translateY(-2px);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
+    body {margin:0; font-family:'Quicksand', sans-serif; background:#f2f7fa; color:#333;}
+    header {background:#4aaaa4; color:white; padding:20px; text-align:center;}
+    select {padding:8px; font-size:16px; margin-top:10px;}
+    #content {background:white; margin:20px; padding:25px; border-radius:8px; min-height:250px;}
+    footer {background:#eee; text-align:center; padding:15px; font-size:14px;}
+    button {background:#4aaaa4; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;}
+    textarea, input {width:100%; padding:8px; margin:6px 0; font-family:inherit;}
   </style>
 </head>
 <body>
@@ -140,7 +20,6 @@
 <header>
   <h1>StudyNotes</h1>
   <p>Web aplikacija za organizaciju beleški tokom učenja</p>
-
   <select id="menu">
     <option value="dashboard.html">Početna</option>
     <option value="notes.html">Beleške</option>
@@ -148,26 +27,6 @@
     <option value="about.html">O aplikaciji</option>
   </select>
 </header>
-
-<!-- HERO KARTICE -->
-<div id="hero">
-  <div class="card" data-page="dashboard.html">
-    <h3>Početna</h3>
-    <p>Pregled svih beleški i predmeta</p>
-  </div>
-  <div class="card" data-page="notes.html">
-    <h3>Beleške</h3>
-    <p>Dodaj i upravljaj svojim beleškama</p>
-  </div>
-  <div class="card" data-page="subjects.html">
-    <h3>Predmeti</h3>
-    <p>Pregled i organizacija predmeta</p>
-  </div>
-  <div class="card" data-page="about.html">
-    <h3>O aplikaciji</h3>
-    <p>Saznaj više o ovom projektu</p>
-  </div>
-</div>
 
 <div id="content"></div>
 
@@ -177,30 +36,15 @@
 
 <script>
   $(document).ready(function () {
-    // Prvi load
     $("#content").load("dashboard.html");
+  });
 
-    // Promena stranice preko select menija
-    $("#menu").on("change", function () {
-      let page = $(this).val();
-      $("#content").fadeOut(200, function () {
-        $("#content").load(page, function () {
-          $("#content").fadeIn(200);
-        });
-      });
-    });
-
-    // Promena stranice klikom na kartice
-    $(".card").on("click", function () {
-      let page = $(this).data("page");
-      $("#content").fadeOut(200, function () {
-        $("#content").load(page, function () {
-          $("#content").fadeIn(200);
-        });
-      });
+  $("#menu").on("change", function () {
+    let page = $(this).val();
+    $("#content").fadeOut(200, function () {
+      $("#content").load(page, function () {$("#content").fadeIn(200);});
     });
   });
 </script>
-
 </body>
 </html>
