@@ -11,52 +11,97 @@
     body {
       margin: 0;
       font-family: 'Quicksand', sans-serif;
-      background: #f2f7fa;
+      background: #edf2f7;
       color: #333;
     }
 
     header {
-      background: #4aaaa4;
+      background: linear-gradient(90deg, #4aaaa4, #3f9e9b);
       color: white;
-      padding: 20px;
+      padding: 25px 20px;
       text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 2em;
+    }
+
+    header p {
+      margin: 5px 0 15px 0;
+      font-weight: 400;
+      font-size: 1em;
+      opacity: 0.9;
     }
 
     select {
-      padding: 8px;
+      padding: 10px 12px;
       font-size: 16px;
-      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    select:hover {
+      border-color: #4aaaa4;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     #content {
       background: white;
-      margin: 20px;
-      padding: 25px;
-      border-radius: 8px;
-      min-height: 250px;
+      margin: 25px auto;
+      padding: 30px;
+      border-radius: 12px;
+      min-height: 300px;
+      max-width: 900px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: all 0.3s;
     }
 
     footer {
-      background: #eee;
+      background: #f5f5f5;
       text-align: center;
-      padding: 15px;
+      padding: 20px;
       font-size: 14px;
+      border-top: 1px solid #ddd;
+      color: #555;
     }
 
     button {
       background: #4aaaa4;
       color: white;
       border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
+      padding: 8px 16px;
+      border-radius: 6px;
       cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #3f9e9b;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
     textarea, input {
       width: 100%;
-      padding: 8px;
-      margin: 6px 0;
+      padding: 10px;
+      margin: 8px 0;
       font-family: inherit;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    textarea:focus, input:focus {
+      border-color: #4aaaa4;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
   </style>
 </head>
@@ -77,7 +122,7 @@
 <div id="content"></div>
 
 <footer>
-  &copy; 2025 StudyNotes – studentski projekat
+  &copy; 2026 – Anja Šarenac
 </footer>
 
 <script>
