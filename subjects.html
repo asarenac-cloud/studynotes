@@ -1,32 +1,67 @@
-<h2>Predmeti</h2>
-<p class="description" style="text-align:center; max-width:800px;">
-U nastavku je prikazan primer liste predmeta za koje se mogu voditi beleške u okviru aplikacije StudyNotes.
-Klikom na dugme "Otvori" automatski se otvara stranica Beleške sa odabranim predmetom.
-</p>
+<div class="card" style="max-width:900px;margin:0 auto;">
+  <h2 style="text-align:center;">Predmeti</h2>
 
-<div id="subjectsList" style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; max-width:1000px; margin:20px auto 50px auto;">
-  <div class="subject-card"><h4>Istorija umetnosti 1</h4><p>Organizujte beleške po ovom predmetu.</p><button data-subject="Istorija umetnosti 1">Otvori</button></div>
-  <div class="subject-card"><h4>Istorija umetnosti 2</h4><p>Organizujte beleške po ovom predmetu.</p><button data-subject="Istorija umetnosti 2">Otvori</button></div>
-  <div class="subject-card"><h4>Osnovi poslovanja</h4><p>Organizujte beleške po ovom predmetu.</p><button data-subject="Osnovi poslovanja">Otvori</button></div>
-  <div class="subject-card"><h4>CRM</h4><p>Organizujte beleške po ovom predmetu.</p><button data-subject="CRM">Otvori</button></div>
-  <div class="subject-card"><h4>HMIP</h4><p>Organizujte beleške po ovom predmetu.</p><button data-subject="HMIP">Otvori</button></div>
-  <div class="subject-card"><h4>Digitalni marketing</h4><p>Organizujte beleške po ovom predmetu.</p><button data-subject="Digitalni marketing">Otvori</button></div>
-  <div class="subject-card"><h4>Menadžment</h4><p>Organizujte beleške po ovom predmetu.</p><button data-subject="Menadžment">Otvori</button></div>
+  <p class="description" style="text-align:center;">
+    U nastavku je prikazan primer liste predmeta za koje se mogu voditi beleške u okviru aplikacije StudyNotes.
+    Klikom na dugme <strong>Otvori</strong> automatski se otvara stranica Beleške sa odabranim predmetom.
+  </p>
+</div>
+
+<div id="subjectsList" class="subjects-wrapper">
+  <div class="subject-card">
+    <h4>Istorija umetnosti 1</h4>
+    <p>Organizujte beleške po ovom predmetu.</p>
+    <button data-subject="Istorija umetnosti 1">Otvori</button>
+  </div>
+
+  <div class="subject-card">
+    <h4>Istorija umetnosti 2</h4>
+    <p>Organizujte beleške po ovom predmetu.</p>
+    <button data-subject="Istorija umetnosti 2">Otvori</button>
+  </div>
+
+  <div class="subject-card">
+    <h4>Osnovi poslovanja</h4>
+    <p>Organizujte beleške po ovom predmetu.</p>
+    <button data-subject="Osnovi poslovanja">Otvori</button>
+  </div>
+
+  <div class="subject-card">
+    <h4>CRM</h4>
+    <p>Organizujte beleške po ovom predmetu.</p>
+    <button data-subject="CRM">Otvori</button>
+  </div>
+
+  <div class="subject-card">
+    <h4>HMIP</h4>
+    <p>Organizujte beleške po ovom predmetu.</p>
+    <button data-subject="HMIP">Otvori</button>
+  </div>
+
+  <div class="subject-card">
+    <h4>Digitalni marketing</h4>
+    <p>Organizujte beleške po ovom predmetu.</p>
+    <button data-subject="Digitalni marketing">Otvori</button>
+  </div>
+
+  <div class="subject-card">
+    <h4>Menadžment</h4>
+    <p>Organizujte beleške po ovom predmetu.</p>
+    <button data-subject="Menadžment">Otvori</button>
+  </div>
 </div>
 
 <script>
 $(document).ready(function(){
-  // fade-in kartice
-  $("#subjectsList .subject-card").hide().each(function(i){ $(this).delay(150*i).fadeIn(400); });
+  $(".subject-card").hide().each(function(i){
+    $(this).delay(120*i).fadeIn(400);
+  });
 
-  // klik na dugme vodi na notes.html i selektuje predmet
-  $("#subjectsList button").click(function(){
+  $("#subjectsList button").on("click", function(){
     let subject = $(this).data("subject");
 
-    // load notes.html u content div
     $("#content").fadeOut(200, function(){
       $("#content").load("notes.html", function(){
-        // nakon load-a, selektuj predmet u dropdown-u
         $("#noteSubject").val(subject);
         $("#content").fadeIn(200);
       });
@@ -34,3 +69,54 @@ $(document).ready(function(){
   });
 });
 </script>
+
+<style>
+  .card {
+    background: var(--card);
+    color: var(--text);
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  .description {
+    max-width: 750px;
+    margin: 10px auto;
+    line-height: 1.6;
+  }
+
+  .subjects-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto 50px auto;
+  }
+
+  .subject-card {
+    background: var(--card);
+    color: var(--text);
+    padding: 22px;
+    width: 220px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .subject-card p {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  .subject-card button {
+    margin-top: 12px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+</style>
