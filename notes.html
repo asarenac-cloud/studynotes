@@ -1,15 +1,15 @@
-<h2>Beleške</h2>
+<div class="card" style="max-width:700px;margin:0 auto 30px auto;">
+  <h2 style="text-align:center;">Beleške</h2>
 
-<div class="note-form" style="max-width:600px;margin:20px auto 40px auto;padding:20px;background:white;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.05);">
   <label>Predmet:</label>
   <select id="noteSubject">
-    <option value="Istorija umetnosti 1">Istorija umetnosti 1</option>
-    <option value="Istorija umetnosti 2">Istorija umetnosti 2</option>
-    <option value="Osnovi poslovanja">Osnovi poslovanja</option>
-    <option value="CRM">CRM</option>
-    <option value="HMIP">HMIP</option>
-    <option value="Digitalni marketing">Digitalni marketing</option>
-    <option value="Menadžment">Menadžment</option>
+    <option>Istorija umetnosti 1</option>
+    <option>Istorija umetnosti 2</option>
+    <option>Osnovi poslovanja</option>
+    <option>CRM</option>
+    <option>HMIP</option>
+    <option>Digitalni marketing</option>
+    <option>Menadžment</option>
   </select>
 
   <label>Naziv beleške:</label>
@@ -26,50 +26,136 @@
 
 <script>
 $(document).ready(function () {
-  // --- Učitavanje beleški iz localStorage ---
-  let savedNotes = JSON.parse(localStorage.getItem('notes')) || {};
+  let savedNotes = JSON.parse(localStorage.getItem("notes")) || {};
 
   function renderNotes() {
     $("#notesList").empty();
-    for(let subj in savedNotes){
-      let container = $(`<div class="subject-container" data-subject="${subj}"><h4 style="text-align:center;">${subj}</h4><div class="subject-notes"></div></div>`);
-      container.appendTo("#notesList");
-      savedNotes[subj].forEach(note=>{
-        let card = $(`<div class="note-card" style="background:white;border-radius:12px;padding:20px;width:220px;box-shadow:0 4px 12px rgba(0,0,0,0.05);margin:10px auto;"><h4>${note.title}</h4><p>${note.text}</p><button class="delete-btn">Obriši</button></div>`);
-        card.hide().appendTo(container.find(".subject-notes")).fadeIn(400);
+
+    for (let subj in savedNotes) {
+      let container = $(`
+        <div class="subject-container">
+          <h4>${subj}</h4>
+          <div class="subject-notes"></div>
+        </div>
+      `);
+
+      savedNotes[subj].forEach(note => {
+        let card = $(`
+          <div class="note-card">
+            <h4>${note.title}</h4>
+            <p>${note.text}</p>
+            <button class="delete-btn">Obriši</button>
+          </div>
+        `);
+        container.find(".subject-notes").append(card);
       });
+
+      $("#notesList").append(container);
     }
-    // update ukupno beleški
-    localStorage.setItem('notesCount', Object.values(savedNotes).reduce((a,b)=>a+b.length,0));
+
+    localStorage.setItem(
+      "notesCount",
+      Object.values(savedNotes).reduce((a,b)=>a+b.length,0)
+    );
   }
 
-  renderNotes(); // prikaz beleški prilikom učitavanja
+  renderNotes();
 
-  // --- Dodavanje nove beleške ---
   $("#addNote").on("click", function () {
-    let title = $("#noteTitle").val();
-    let text = $("#noteText").val();
+    let title = $("#noteTitle").val().trim();
+    let text = $("#noteText").val().trim();
     let subject = $("#noteSubject").val();
-    if(title=="" || text==""){ alert("Popunite sva polja"); return; }
+
+    if (!title || !text) {
+      alert("Popunite sva polja");
+      return;
+    }
 
     savedNotes[subject] = savedNotes[subject] || [];
-    savedNotes[subject].push({title,text});
-    localStorage.setItem('notes', JSON.stringify(savedNotes));
+    savedNotes[subject].push({ title, text });
 
-    $("#noteTitle").val(""); 
+    localStorage.setItem("notes", JSON.stringify(savedNotes));
+
+    $("#noteTitle").val("");
     $("#noteText").val("");
 
-    renderNotes(); // refresh prikaza
+    renderNotes();
   });
 
-  // --- Brisanje beleške ---
-  $("#notesList").on("click",".delete-btn",function(){
-    let subj=$(this).closest(".subject-container").data("subject");
-    let title=$(this).siblings("h4").text();
-    savedNotes[subj] = savedNotes[subj].filter(n=>n.title!==title);
-    if(savedNotes[subj].length===0) delete savedNotes[subj]; // ako nema beleški, ukloni container
-    localStorage.setItem('notes',JSON.stringify(savedNotes));
+  $("#notesList").on("click", ".delete-btn", function () {
+    let subject = $(this).closest(".subject-container").find("h4").first().text();
+    let title = $(this).siblings("h4").text();
+
+    savedNotes[subject] = savedNotes[subject].filter(n => n.title !== title);
+    if (savedNotes[subject].length === 0) delete savedNotes[subject];
+
+    localStorage.setItem("notes", JSON.stringify(savedNotes));
     renderNotes();
   });
 });
 </script>
+
+<style>
+  .card {
+    background: var(--card);
+    color: var(--text);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  select, input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0 14px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: var(--card);
+    color: var(--text);
+  }
+
+  button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .subject-container {
+    margin: 30px auto;
+    max-width: 1000px;
+  }
+
+  .subject-container h4 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .subject-notes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .note-card {
+    background: var(--card);
+    color: var(--text);
+    padding: 18px;
+    width: 220px;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  }
+
+  .note-card p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .delete-btn {
+    margin-top: 10px;
+    background: #e74c3c;
+  }
+</style>
