@@ -1,36 +1,91 @@
-<h2>O aplikaciji</h2>
-<p class="description" style="text-align:center; max-width:900px;">
-StudyNotes je jednostavna web aplikacija razvijena u edukativne svrhe. Cilj je demonstracija osnovnih principa rada sa HTML, CSS, JavaScript, jQuery i AJAX.
-</p>
-<p class="description" style="text-align:center; max-width:900px;">
-Aplikacija koristi dinamičko učitavanje sadržaja bez osvežavanja stranice, čime se poboljšava korisničko iskustvo.
-</p>
+<div class="card" style="max-width:900px;margin:0 auto 25px auto;">
+  <h2 style="text-align:center;">O aplikaciji</h2>
 
-<div id="techList" style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; max-width:900px; margin:20px auto 50px auto;">
-  <div class="tech-card" style="background:white;border-radius:12px;padding:25px;width:200px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.05);cursor:default;">
+  <p class="description" style="text-align:center;">
+    StudyNotes je jednostavan web sajt napravljen u edukativne svrhe; 
+    a takođe i kao projekat za predmet web dizajn i web upotrebljivost, 
+    koji imam u ovom semestru :) 
+    Cilj ovog sajta je demonstracija osnovnih principa rada sa
+    HTML-om, CSS-om, JavaScript-om, jQuery-jem i AJAX-om.
+  </p>
+
+  <p class="description" style="text-align:center;">
+    Aplikacija koristi dinamičko učitavanje sadržaja bez osvežavanja stranice,
+    čime se poboljšava korisničko iskustvo.
+  </p>
+</div>
+
+<div id="techList" class="tech-wrapper">
+  <div class="tech-card">
     <h4>HTML i CSS</h4>
     <p>Struktura i stilizacija aplikacije</p>
   </div>
-  <div class="tech-card" style="background:white;border-radius:12px;padding:25px;width:200px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.05);cursor:default;">
+
+  <div class="tech-card">
     <h4>JavaScript</h4>
     <p>Osnovna logika aplikacije</p>
   </div>
-  <div class="tech-card" style="background:white;border-radius:12px;padding:25px;width:200px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.05);cursor:default;">
+
+  <div class="tech-card">
     <h4>jQuery</h4>
     <p>Manipulacija DOM elementima i animacije</p>
   </div>
-  <div class="tech-card" style="background:white;border-radius:12px;padding:25px;width:200px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.05);cursor:default;">
+
+  <div class="tech-card">
     <h4>AJAX</h4>
     <p>Dinamičko učitavanje sadržaja</p>
   </div>
 </div>
 
-<p class="description" style="text-align:center; max-width:900px;">
-Sve ove tehnologije su kombinovane kako bi aplikacija bila moderna, interaktivna i vizuelno privlačna.
+<p class="description" style="text-align:center; max-width:900px; margin:0 auto;">
+  Sve ovo je kombinovano tako kako bi sajt bio moderan,
+  interaktivan i vizuelno privlačan.
 </p>
 
 <script>
 $(document).ready(function(){
-  $("#techList .tech-card").hide().each(function(i){ $(this).delay(150*i).fadeIn(400); });
+  $(".tech-card").hide().each(function(i){
+    $(this).delay(120*i).fadeIn(400);
+  });
 });
 </script>
+
+<style>
+  .card {
+    background: var(--card);
+    color: var(--text);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  .description {
+    max-width: 750px;
+    margin: 10px auto;
+    line-height: 1.6;
+  }
+
+  .tech-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+  }
+
+  .tech-card {
+    background: var(--card);
+    color: var(--text);
+    padding: 22px;
+    width: 200px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  }
+
+  .tech-card p {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+</style>
