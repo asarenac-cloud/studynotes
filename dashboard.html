@@ -1,37 +1,93 @@
-<h2>Početna strana</h2>
-<p class="description" style="text-align:center; max-width:800px;">
-StudyNotes je jednostavna web aplikacija namenjena studentima za organizaciju gradiva i vođenje beleški tokom učenja.
-</p>
-<p class="description" style="text-align:center; max-width:800px;">
-Aplikacija omogućava unos i pregled beleški, kao i osnovnu podelu gradiva po predmetima.
-</p>
-<p class="description" style="text-align:center; max-width:800px;">
-Navigacija kroz aplikaciju vrši se putem padajućeg menija ili klikom na kartice.
-</p>
+<div class="card" style="text-align:center; max-width:900px; margin:0 auto;">
+  <h2>Početna strana</h2>
+
+  <p class="description">
+    StudyNotes je jednostavan web sajt namenjen studentima za organizaciju gradiva i vođenje beleški tokom učenja.
+  </p>
+
+  <p class="description">
+    Sajt omogućava unos i pregled beleški, kao i osnovnu podelu gradiva po predmetima.
+  </p>
+
+  <p class="description">
+    Navigacija kroz sajt vrši se putem padajućeg menija ili klikom na kartice.
+  </p>
+</div>
 
 <!-- STATISTIKA -->
-<div id="stats" style="display:flex; justify-content:center; gap:30px; margin:20px auto; flex-wrap:wrap;">
-  <div class="stat-card" style="background:#4aaaa4; color:white; padding:25px 35px; border-radius:14px; text-align:center; width:180px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+<div id="stats" class="stats-wrapper">
+  <div class="stat-card">
     <p>Ukupno beleški</p>
     <h3 id="totalNotes">0</h3>
   </div>
-  <div class="stat-card" style="background:#4aaaa4; color:white; padding:25px 35px; border-radius:14px; text-align:center; width:180px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+
+  <div class="stat-card">
     <p>Ukupno predmeta</p>
     <h3 id="totalSubjects">0</h3>
   </div>
 </div>
 
-<!-- KARTICE PREVIEW BELEŠAKA -->
-<div id="cards" style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; max-width:1000px; margin:20px auto 50px auto;"></div>
+<!-- PREVIEW -->
+<div class="card" style="max-width:900px; margin:0 auto;">
+  <div id="cards" style="text-align:center;"></div>
+</div>
 
 <script>
   $(document).ready(function () {
-    // generiši statistiku prema notes.html podatcima
-    let notesCount = localStorage.getItem('notesCount') || 0;
-    let subjectsCount = localStorage.getItem('subjectsCount') || 7;
+    let notesCount = localStorage.getItem("notesCount") || 0;
+    let subjectsCount = localStorage.getItem("subjectsCount") || 7;
+
     $("#totalNotes").text(notesCount);
     $("#totalSubjects").text(subjectsCount);
 
-    $("#cards").html("<p style='text-align:center; color:#555;'>Kliknite na 'Beleške' da dodate i pregledate beleške po predmetima.</p>");
+    $("#cards").html(
+      "<p class='muted'>Kliknite na <strong>Beleške</strong> da dodate i pregledate beleške po predmetima.</p>"
+    );
   });
 </script>
+
+<style>
+  .card {
+    background: var(--card);
+    color: var(--text);
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  .description {
+    max-width: 750px;
+    margin: 10px auto;
+    line-height: 1.6;
+  }
+
+  .stats-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+  }
+
+  .stat-card {
+    background: var(--card);
+    color: var(--text);
+    padding: 25px 35px;
+    border-radius: 16px;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    border-top: 5px solid var(--accent);
+  }
+
+  .stat-card h3 {
+    margin-top: 10px;
+    font-size: 32px;
+    color: var(--accent);
+  }
+
+  .muted {
+    opacity: 0.75;
+  }
+</style>
