@@ -1,18 +1,116 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sr">
 <head>
   <meta charset="UTF-8">
   <title>StudyNotes</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
   <style>
-    body {margin:0; font-family:'Quicksand', sans-serif; background:#f2f7fa; color:#333;}
-    header {background:#4aaaa4; color:white; padding:20px; text-align:center;}
-    select {padding:8px; font-size:16px; margin-top:10px;}
-    #content {background:white; margin:20px; padding:25px; border-radius:8px; min-height:250px;}
-    footer {background:#eee; text-align:center; padding:15px; font-size:14px;}
-    button {background:#4aaaa4; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;}
-    textarea, input {width:100%; padding:8px; margin:6px 0; font-family:inherit;}
+    :root {
+      --bg: #f2f7fa;
+      --card: #ffffff;
+      --text: #333;
+      --header: #4aaaa4;
+      --footer: #eeeeee;
+      --accent: #4aaaa4;
+    }
+
+    body.dark {
+      --bg: #121212;
+      --card: #1e1e1e;
+      --text: #f1f1f1;
+      --header: #1f6f6a;
+      --footer: #1a1a1a;
+      --accent: #6fd6d0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      background: var(--header);
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .nav-wrapper {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-select {
+      padding: 10px 14px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      background: white;
+      color: #333;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: all 0.3s;
+    }
+
+    body.dark .nav-select {
+      background: #2a2a2a;
+      color: #f1f1f1;
+    }
+
+    .nav-select:hover {
+      transform: translateY(-2px);
+    }
+
+    .theme-btn {
+      background: white;
+      color: #333;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: all 0.3s;
+    }
+
+    body.dark .theme-btn {
+      background: #2a2a2a;
+      color: #f1f1f1;
+    }
+
+    .theme-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    #content {
+      background: var(--card);
+      margin: 20px;
+      padding: 25px;
+      border-radius: 14px;
+      min-height: 250px;
+      transition: background 0.3s;
+    }
+
+    footer {
+      background: var(--footer);
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    textarea, input, button {
+      font-family: inherit;
+    }
   </style>
 </head>
 <body>
@@ -20,12 +118,17 @@
 <header>
   <h1>StudyNotes</h1>
   <p>Web aplikacija za organizaciju beleški tokom učenja</p>
-  <select id="menu">
-    <option value="dashboard.html">Početna</option>
-    <option value="notes.html">Beleške</option>
-    <option value="subjects.html">Predmeti</option>
-    <option value="about.html">O aplikaciji</option>
-  </select>
+
+  <div class="nav-wrapper">
+    <select id="menu" class="nav-select">
+      <option value="dashboard.html">Početna</option>
+      <option value="notes.html">Beleške</option>
+      <option value="subjects.html">Predmeti</option>
+      <option value="about.html">O aplikaciji</option>
+    </select>
+
+    <button id="themeToggle" class="theme-btn">🌙 Dark</button>
+  </div>
 </header>
 
 <div id="content"></div>
@@ -37,14 +140,34 @@
 <script>
   $(document).ready(function () {
     $("#content").load("dashboard.html");
+
+    if (localStorage.getItem("theme") === "dark") {
+      $("body").addClass("dark");
+      $("#themeToggle").text("☀️ Light");
+    }
   });
 
   $("#menu").on("change", function () {
     let page = $(this).val();
     $("#content").fadeOut(200, function () {
-      $("#content").load(page, function () {$("#content").fadeIn(200);});
+      $("#content").load(page, function () {
+        $("#content").fadeIn(200);
+      });
     });
   });
+
+  $("#themeToggle").on("click", function () {
+    $("body").toggleClass("dark");
+
+    if ($("body").hasClass("dark")) {
+      localStorage.setItem("theme", "dark");
+      $(this).text("☀️ Light");
+    } else {
+      localStorage.setItem("theme", "light");
+      $(this).text("🌙 Dark");
+    }
+  });
 </script>
+
 </body>
 </html>
